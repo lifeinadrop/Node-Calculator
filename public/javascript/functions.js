@@ -1,6 +1,3 @@
-// Setup the calculator display.
-const display = document.querySelector('.calculator-screen');
-
 const calculator = {
     displayValue: '0', // Keep track of what should displayed on the screen.
     firstNumber: null, // Initialize the variable for the first number.
@@ -8,51 +5,12 @@ const calculator = {
     operator: null, // +, -, /, or * (for now)
 };
 
-// Configure the keys of the calculator.
-const keys = document.querySelector(".calculator-screen");
-
-// Listen for a click event.
-keys.addEventListener('click', (event) => {
-    const target = event.target;
-    const value = target.value;
-
-    // possibly add a check to exit the function.
-    if (!target.matches('button')) {
-        return;
-    }
-
-    // Check which event value is used and handle appropriately. 
-    switch (value) {
-        case '-':
-        case '+':
-        case '*':
-        case '/':
-        case '=':
-            handleOperator(value);
-            break;
-        case '.':
-            decimal(value);
-            break;
-        case 'all-clear':
-            allClear();
-            break;
-        default:
-            if (Number.isInteger(parseFloat(value))) {
-                inputNumber(value);
-            }
-        }
-
-    updateDisplay();
-});
-
 // Handles updating the display.
-updateDisplay = 
 function updateDisplay() {
     display.value = calculator.displayValue; // Set the value of the display.
 }
 
 // Handles inputting digits. Write the digit pressed if the current number is 0 OR if there is already a number there.
-inputNumber = 
 function inputNumber(number) {
     const displayValue = calculator.displayValue;
     const waitingForSecondNumber = calculator.waitingForSecondNumber;
@@ -67,25 +25,24 @@ function inputNumber(number) {
 }
 
 // Handles inputting a single decimal point per number (num1 & num2).
-decimal = 
 function decimal() {
     const dot = ".";
     if(!calculator.displayValue.includes(dot)) {
         calculator.displayValue += dot;
+        updateDisplay();
     }
 }
 
 // Resets the calculator to it's default values.
-allClear = 
 function allClear() {
     calculator.displayValue = "0";
     calculator.firstNumber = null;
     calculator.waitingForSecondNumber = false;
     calculator.operator = null;
+    updateDisplay();
 }
 
 // Handles when an operator button is clicked.
-handleOperator = 
 function handleOperator(nextOperator) {
     const firstNumber = calculator.firstNumber;
     const displayValue = calculator.displayValue;
@@ -111,7 +68,6 @@ function handleOperator(nextOperator) {
 }
 
 // Handles the calculations for each operator.
-calculate = 
 function calculate(n1, operator, n2) {
     switch (operator) {
         case '+': return n1 + n2
