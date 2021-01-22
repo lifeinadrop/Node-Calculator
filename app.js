@@ -1,36 +1,19 @@
-// Configure the keys of the calculator.
-const keys = document.querySelector('.calculator-keys');
+var express = require("express");
+var app = express();
+var path = require("path");
 
-// Listen for a click event.
-keys.addEventListener('click', (event) => {
-    const target = event.target;
-    const value = target.value;
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+// use res.render to load up an ejs view file
+app.use( express.static(__dirname + "/pages" ) );
 
-    // possibly add a check to exit the function.
-    if (!target.matches('button')) {
-        return;
-    }
+// index page
+app.get('/', function(req, res) {
+    res.render('index', {});
+});
 
-    // Check which event value is used and handle appropriately. 
-    switch (value) {
-        case '-':
-        case '+':
-        case '*':
-        case '/':
-        case '=':
-            handleOperator(value);
-            break;
-        case '.':
-            decimal(value);
-            break;
-        case 'all-clear':
-            allClear();
-            break;
-        default:
-            if (Number.isInteger(parseFloat(value))) {
-                inputNumber(value);
-            }
-        }
 
-    updateDisplay();
+
+app.listen(3001, function () {
+  console.log('App listening on port 3001!');
 });
