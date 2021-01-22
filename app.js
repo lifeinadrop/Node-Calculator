@@ -6,6 +6,8 @@ var path = require("path");
 app.set('view engine', 'ejs');
 // use res.render to load up an ejs view file
 app.use( express.static(__dirname + "/pages" ) );
+app.use( express.static(__dirname + "/css" ) );
+app.use( express.static(__dirname + "/javascript" ) );
 
 // index page
 app.get('/', function(req, res) {
